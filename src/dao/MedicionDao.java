@@ -1,10 +1,14 @@
 package dao;
 
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import datos.Medicion;
+import datos.Provincia;
 
 public class MedicionDao {
 	
@@ -34,5 +38,61 @@ public class MedicionDao {
 			return objeto;
 			}
 
+		@SuppressWarnings("unchecked")
+		public List<Medicion> traerMedicion(Provincia provincia,
+				GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
+				throws HibernateException {
+			List<Medicion> lista = null;
+			try {
+				iniciaOperacion();
+				String hql = "from medicion m inner join fetch p.provincia where provincia=provincia and m.fecha=ffecha";
+				lista = session.createQuery(hql)
+						.setCalendar("ffecha", fechaInicial).list();
+			} catch (HibernateException he) {
+				manejaExcepcion(he);
+				throw he;
+			} finally {
+				session.close();
+
+			}
+			return lista;
+		}
+
+		@SuppressWarnings("unchecked")
+		public List<Medicion> traerMedicion(Provincia provincia,
+				GregorianCalendar fecha) throws HibernateException {
+			List<Medicion> lista = null;
+			try {
+				iniciaOperacion();
+				String hql = "from medicion m inner join fetch p.provincia where m.fecha=ffecha";
+				lista = session.createQuery(hql).setCalendar("ffecha", fecha)
+						.list();
+			} catch (HibernateException he) {
+				manejaExcepcion(he);
+				throw he;
+			} finally {
+				session.close();
+
+			}
+			return lista;
+		}
+
+		@SuppressWarnings("unchecked")
+		public List<Medicion> traerMedicion(GregorianCalendar fecha)
+				throws HibernateException {
+			List<Medicion> lista = null;
+			try {
+				iniciaOperacion();
+				String hql = "from medicion m where m.fecha =:ffecha";
+				lista = session.createQuery(hql).setCalendar("ffecha", fecha)
+						.list();
+			} catch (HibernateException he) {
+				manejaExcepcion(he);
+				throw he;
+			} finally {
+				session.close();
+			}
+			return lista;
+		}
 
 }
