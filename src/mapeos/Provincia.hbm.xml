@@ -9,5 +9,10 @@
 </id>
 
 <property column="provincia" name="provincia" type="string" />
+<set name="mediciones" table="medicion" order-by="idMedicion asc" inverse="true" lazy="true" fetch="select">
+<key column="idProvincia" not-null="true" />
+<one-to-many class="datos.Medicion" />
+</set>
+
 </class>
 </hibernate-mapping>

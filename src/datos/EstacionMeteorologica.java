@@ -1,11 +1,13 @@
 package datos;
 
+import java.util.Set;
+
 public class EstacionMeteorologica {
 	
 	 private int idEstacionMeteorologica;
 	 private String estacionMeteorologica;
 	 private int altura;
-	 
+	 private Set<Medicion> mediciones;
 	 
 	public EstacionMeteorologica()
 	{}
@@ -38,6 +40,14 @@ public class EstacionMeteorologica {
 
 	public void setAltura(int altura) {
 		this.altura = altura;
+	}
+	
+	public Set<Medicion> getMediciones() {
+		return mediciones;
+	}
+
+	public void setMediciones(Set<Medicion> mediciones) {
+		this.mediciones = mediciones;
 	}
 
 	@Override

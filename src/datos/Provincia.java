@@ -1,9 +1,12 @@
 package datos;
 
+import java.util.Set;
+
 public class Provincia {
 	
 	private int idProvincia;
     private String provincia;
+    private Set<Medicion> mediciones;
     
     public Provincia()
     {}
@@ -26,6 +29,14 @@ public class Provincia {
 		this.provincia = provincia;
 	}
 	
+	public Set<Medicion> getMediciones() {
+		return mediciones;
+	}
+
+	public void setMediciones(Set<Medicion> mediciones) {
+		this.mediciones = mediciones;
+	}
+
 	@Override	
 	public String toString()
 	{

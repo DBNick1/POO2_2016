@@ -11,5 +11,10 @@
 <property column="estacionMeteorologica" name="estacionMeteorologica" type="string" />
 <property column="altura" name="altura" type="int" />
 
+<set name="mediciones" table="medicion" order-by="idMedicion asc" inverse="true" lazy="true" fetch="select">
+<key column="idEstacionMeteorologica" not-null="true" />
+<one-to-many class="datos.Medicion" />
+</set>
+
 </class>
 </hibernate-mapping>
