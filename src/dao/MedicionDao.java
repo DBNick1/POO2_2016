@@ -1,14 +1,19 @@
 package dao;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import datos.Medicion;
 import datos.Provincia;
+import funciones.Funciones;
 
 public class MedicionDao {
 	
@@ -46,8 +51,7 @@ public class MedicionDao {
 			try {
 				iniciaOperacion();
 				String hql = "from medicion m inner join fetch p.provincia where provincia=provincia and m.fecha=ffecha";
-				lista = session.createQuery(hql)
-						.setCalendar("ffecha", fechaInicial).list();
+				lista = session.createQuery(hql).setCalendar("ffecha", (Calendar) fechaInicial).list();
 			} catch (HibernateException he) {
 				manejaExcepcion(he);
 				throw he;
@@ -59,14 +63,16 @@ public class MedicionDao {
 		}
 
 		@SuppressWarnings("unchecked")
-		public List<Medicion> traerMedicion(Provincia provincia,
-				GregorianCalendar fecha) throws HibernateException {
+		public List<Medicion> traerMedicion(Provincia provincia,Calendar fecha) throws HibernateException {
 			List<Medicion> lista = null;
 			try {
 				iniciaOperacion();
-				String hql = "from medicion m inner join fetch p.provincia where m.fecha=ffecha";
-				lista = session.createQuery(hql).setCalendar("ffecha", fecha)
+				String hql = "FROM medicion m where m.fecha = :ffecha";
+				lista = session.createQuery(hql)
+						.setCalendar("ffecha", fecha)
+						.setProperties(provincia)
 						.list();
+				
 			} catch (HibernateException he) {
 				manejaExcepcion(he);
 				throw he;
@@ -78,14 +84,16 @@ public class MedicionDao {
 		}
 
 		@SuppressWarnings("unchecked")
-		public List<Medicion> traerMedicion(GregorianCalendar fecha)
+		public List<Medicion> traerMedicion(Calendar fecha)
 				throws HibernateException {
 			List<Medicion> lista = null;
 			try {
 				iniciaOperacion();
-				String hql = "from medicion m where m.fecha =:ffecha";
-				lista = session.createQuery(hql).setCalendar("ffecha", fecha)
+				String hql = "FROM medicion m where m.fecha = :ffecha";
+				lista = session.createQuery(hql)
+						.setCalendar("ffecha", fecha)
 						.list();
+
 			} catch (HibernateException he) {
 				manejaExcepcion(he);
 				throw he;

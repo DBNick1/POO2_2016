@@ -53,7 +53,7 @@ public class EstacionMeteorologica {
 	@Override
 	public String toString() {
 		return "EstacionMeteorologica "
-				+ estacionMeteorologica + ", altura=" + altura + "msnm";
+				+ estacionMeteorologica + ", altura=" + altura + " msnm";
 	}
 	
 	 

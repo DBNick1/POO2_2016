@@ -126,7 +126,9 @@ public class Medicion {
 
 	public float calcularPresionCorregida(){
 		float P0=0;
-		double x=(0.03418/((double) estacion.getAltura()));
+		double H=(double) estacion.getAltura();
+		
+		double x=(0.03418/H);
 		double K= Math.exp(x)-1;
 		
 		P0= presion + ((float)K*presion);

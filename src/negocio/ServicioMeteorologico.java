@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -57,8 +58,7 @@ public class ServicioMeteorologico {
 		return m;
 	}
 
-	public List<Medicion> traerMedicion(Provincia provincia,
-			GregorianCalendar fecha) throws Exception {
+	public List<Medicion> traerMedicion(Provincia provincia, Calendar fecha) throws Exception {
 
 		List<Medicion> m = dao.traerMedicion(provincia, fecha);
 
@@ -67,7 +67,7 @@ public class ServicioMeteorologico {
 		return m;
 	}
 
-	public List<Medicion> traerMedicion(GregorianCalendar fecha)
+	public List<Medicion> traerMedicion(Calendar fecha)
 			throws Exception {
 
 		List<Medicion> m = dao.traerMedicion(fecha);
