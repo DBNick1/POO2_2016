@@ -1,5 +1,6 @@
 package datos;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import funciones.Funciones;
@@ -8,7 +9,7 @@ public class Medicion {
 	
 	  
 	private int idMedicion;
-	private GregorianCalendar fecha;
+	private Calendar fecha;
 	private float presion;
 	private float temperatura;
 	private float humedad;
@@ -22,7 +23,7 @@ public class Medicion {
 	{
 	}
 	
-	public Medicion(GregorianCalendar fecha, float presion, float temperatura, float humedad,
+	public Medicion(Calendar fecha, float presion, float temperatura, float humedad,
 			float precipitacion, float velocidadViento, String direccionViento, EstacionMeteorologica estacion,
 			Provincia provincia) {
 		super();
@@ -45,11 +46,11 @@ public class Medicion {
 		this.idMedicion = idMedicion;
 	}
 
-	public GregorianCalendar getFecha() {
+	public Calendar getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(GregorianCalendar fecha) {
+	public void setFecha(Calendar fecha) {
 		this.fecha = fecha;
 	}
 
@@ -118,7 +119,7 @@ public class Medicion {
 	}
 @Override	
 	public String toString() {
-		return "[Medicion " + Funciones.traerFechaCorta(fecha) + ", P=" + presion+"hPa"
+		return "[Medicion " + Funciones.traerFechaCorta4(fecha) + ", P=" + presion+"hPa"
 				+", P0="+/*this.calcularPresionCorregida()+*/"hPa"+ ", T=" + temperatura +"°C"+ ", HR=" + humedad
 				+"%"+ ", PP=" + precipitacion +"mm"+ ", V="
 				+ velocidadViento + "km/h" + direccionViento+ "]";

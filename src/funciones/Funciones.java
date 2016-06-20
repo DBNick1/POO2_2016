@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.StringReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -106,7 +108,17 @@ public class Funciones {
 	public static GregorianCalendar traerFecha(int anio, int mes, int dia) {
 		return new GregorianCalendar(anio, mes - 1, dia);
 	}
-
+	
+	public static String traerFechaCorta3(Calendar fecha){
+		DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:SS");
+		return dateFormat.format(fecha.getTime());
+	}
+	
+	public static String traerFechaCorta4(Calendar fecha){
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+		return dateFormat.format(fecha.getTime());
+	}
+	
 	// HORA
 	public static String traerHora(GregorianCalendar f)
 
