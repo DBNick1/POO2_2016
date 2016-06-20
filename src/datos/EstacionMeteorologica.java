@@ -39,7 +39,12 @@ public class EstacionMeteorologica {
 	public void setAltura(int altura) {
 		this.altura = altura;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "EstacionMeteorologica "
+				+ estacionMeteorologica + ", altura=" + altura + "msnm";
+	}
 	
 	 
 	 

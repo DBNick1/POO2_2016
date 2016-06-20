@@ -26,6 +26,7 @@ public class Provincia {
 		this.provincia = provincia;
 	}
 	
+	@Override	
 	public String toString()
 	{
 		return("Provincia de "+provincia);

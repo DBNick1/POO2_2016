@@ -116,11 +116,21 @@ public class Medicion {
 	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
 	}
-	
-	public String toString()
-	{
-		return "Medicion: "+Funciones.traerFechaCorta(fecha);
+@Override	
+	public String toString() {
+		return "[Medicion " + Funciones.traerFechaCorta(fecha) + ", P=" + presion+"hPa"
+				+", P0="+/*this.calcularPresionCorregida()+*/"hPa"+ ", T=" + temperatura +"°C"+ ", HR=" + humedad
+				+"%"+ ", PP=" + precipitacion +"mm"+ ", V="
+				+ velocidadViento + "km/h" + direccionViento+ "]";
 	}
 
+	public float calcularPresionCorregida(){
+		float P0=0;
+		double x=(0.03418/((double) estacion.getAltura()));
+		double K= Math.exp(x)-1;
+		
+		P0= presion + ((float)K*presion);
+		return P0;
+	}
 
 }
