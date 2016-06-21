@@ -13,9 +13,11 @@ import negocio.ServicioMeteorologico;
 public class OO2Test2Tema4 {
 
 	public static void main(String[] args) {
+		
 		ServicioMeteorologico sm = new ServicioMeteorologico();
 
 		Calendar fecha = new GregorianCalendar(2016,2, 01);
+
 		int idProvincia = 1;
 		
 		try {

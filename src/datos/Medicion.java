@@ -125,6 +125,10 @@ public class Medicion {
 				+ velocidadViento + "km/h" + direccionViento+ "]";
 	}
 
+	public boolean equals(Medicion m){
+		return Funciones.sonFechasIguales((GregorianCalendar)fecha, (GregorianCalendar) m.getFecha());
+	}
+
 	public float calcularPresionCorregida(){
 		float P0=0;
 		double H=(double) estacion.getAltura();

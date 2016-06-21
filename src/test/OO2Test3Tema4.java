@@ -18,7 +18,7 @@ public class OO2Test3Tema4 {
 		try {
 			
 			//Escenario 1
-			Calendar fecha = new GregorianCalendar(2016,3, 01);
+			Calendar fecha = new GregorianCalendar(2016,3,1);
 			
 			List<Medicion> lista = sm.traerMedicion(fecha);
 

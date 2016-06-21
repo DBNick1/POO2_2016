@@ -90,8 +90,8 @@ public class MedicionDao {
 		List<Medicion> lista = null;
 		try {
 			iniciaOperacion();
-			String hql = "from medicion m where m.fecha =:ffecha";
-			lista = session.createQuery(hql).setCalendar("ffecha", fecha)
+			String hql = "from Medicion where fecha =:ffecha";
+			lista = session.createQuery(hql).setCalendar("ffecha",fecha)
 					.list();
 
 		} catch (HibernateException he) {
