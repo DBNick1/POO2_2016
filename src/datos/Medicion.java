@@ -6,8 +6,7 @@ import java.util.GregorianCalendar;
 import funciones.Funciones;
 
 public class Medicion {
-	
-	  
+
 	private int idMedicion;
 	private Calendar fecha;
 	private float presion;
@@ -18,13 +17,13 @@ public class Medicion {
 	private String direccionViento;
 	private EstacionMeteorologica estacion;
 	private Provincia provincia;
-	
-	public Medicion()
-	{
+
+	public Medicion() {
 	}
-	
-	public Medicion(Calendar fecha, float presion, float temperatura, float humedad,
-			float precipitacion, float velocidadViento, String direccionViento, EstacionMeteorologica estacion,
+
+	public Medicion(Calendar fecha, float presion, float temperatura,
+			float humedad, float precipitacion, float velocidadViento,
+			String direccionViento, EstacionMeteorologica estacion,
 			Provincia provincia) {
 		super();
 		this.fecha = fecha;
@@ -117,27 +116,23 @@ public class Medicion {
 	public void setProvincia(Provincia provincia) {
 		this.provincia = provincia;
 	}
-@Override	
+
+	@Override
 	public String toString() {
-		return "[Medicion " + Funciones.traerFechaCorta4(fecha) + ", P=" + presion+"hPa"
-				+", P0="+/*this.calcularPresionCorregida()+*/"hPa"+ ", T=" + temperatura +"°C"+ ", HR=" + humedad
-				+"%"+ ", PP=" + precipitacion +"mm"+ ", V="
-				+ velocidadViento + "km/h" + direccionViento+ "]";
+		return "[Medicion " + Funciones.traerFechaCorta4(fecha) + ", P="
+				+ presion + "hPa" + ", P0=" + this.calcularPresionCorregida()
+				+ "hPa" + ", T=" + temperatura + "°C" + ", HR=" + humedad + "%"
+				+ ", PP=" + precipitacion + "mm" + ", V=" + velocidadViento
+				+ "km/h" + direccionViento + "]";
 	}
 
-	public boolean equals(Medicion m){
-		return Funciones.sonFechasIguales((GregorianCalendar)fecha, (GregorianCalendar) m.getFecha());
+	public boolean equals(Medicion m) {
+		return Funciones.sonFechasIguales((GregorianCalendar) fecha,
+				(GregorianCalendar) m.getFecha());
 	}
 
-	public float calcularPresionCorregida(){
-		float P0=0;
-		double H=(double) estacion.getAltura();
-		
-		double x=(0.03418/H);
-		double K= Math.exp(x)-1;
-		
-		P0= presion + ((float)K*presion);
-		return P0;
+	public float calcularPresionCorregida() {
+		return  (float) Funciones.aproximar1Decimal(presion + (((float) (Math.exp(0.03418*estacion.getAltura()/ (temperatura+273.16))-1) * presion)));
 	}
 
 }

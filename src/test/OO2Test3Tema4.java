@@ -21,9 +21,9 @@ public class OO2Test3Tema4 {
 			Calendar fecha = new GregorianCalendar(2016,3,1);
 			
 			List<Medicion> lista = sm.traerMedicion(fecha);
-
+			
 			for (Medicion m : lista) {
-					System.out.println("\n" + m.toString());
+					System.out.println("\n" + m);
 				}
 			//Escenario 2
 			sm.calcularRangoPrecipitacion(new GregorianCalendar(2016,

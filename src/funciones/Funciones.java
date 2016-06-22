@@ -256,6 +256,12 @@ public class Funciones {
 		String cadena[] = valorStr.split("[.]");
 		return Double.parseDouble(cadena[0] + "." + cadena[1].substring(0, 2));
 	}
+	
+	public static double aproximar1Decimal(double valor) {
+		String valorStr = String.valueOf(0.0555 + valor);
+		String cadena[] = valorStr.split("[.]");
+		return Double.parseDouble(cadena[0] + "." + cadena[1].substring(0, 1));
+	}
 
 	public static String sacarGuiones(String cuil) {
 		// 27-36084320-9

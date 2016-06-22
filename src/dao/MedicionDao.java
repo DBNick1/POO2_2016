@@ -36,7 +36,13 @@ public class MedicionDao {
 		Medicion objeto = null;
 		try {
 			iniciaOperacion();
-			objeto = (Medicion) session.get(Medicion.class, idMedicion);
+			String hql="from Medicion where idMedicion =:idMedicion";
+			objeto=(Medicion) session.createQuery(hql).setParameter("idMedicion", (int)idMedicion).uniqueResult();
+			Hibernate.initialize(objeto.getEstacion());
+			Hibernate.initialize(objeto.getProvincia());
+		}catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
 		} finally {
 			session.close();
 		}
@@ -69,10 +75,11 @@ public class MedicionDao {
 		List<Medicion> lista = null;
 		try {
 			iniciaOperacion();
-			String hql = "from medicion m where m.idProvincia =:idProvincia and m.fecha =:ffecha";
+			String hql = "from Medicion where idProvincia =:idProvincia and fecha =:ffecha";
 			lista = session.createQuery(hql).setCalendar("ffecha", fecha)
 					.setParameter("idProvincia", provincia.getIdProvincia())
 					.list();
+			
 
 		} catch (HibernateException he) {
 			manejaExcepcion(he);

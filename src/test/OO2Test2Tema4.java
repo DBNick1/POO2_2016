@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import datos.Medicion;
+import datos.Provincia;
 
 import funciones.Funciones;
 
@@ -22,6 +23,7 @@ public class OO2Test2Tema4 {
 		
 		try {
 			// Escenario 1
+			//System.out.println("\n---> Traer Mediciones de la Provincia con id=1 para el 1/3/2016"+sm.traerProvincia(idProvincia));
 			List<Medicion> lista = sm.traerMedicion(sm.traerProvincia(idProvincia), fecha);
 
 			for (Medicion m : lista) {

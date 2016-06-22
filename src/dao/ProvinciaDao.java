@@ -1,8 +1,10 @@
 package dao;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import datos.Medicion;
 import datos.Provincia;
 
 public class ProvinciaDao {
@@ -26,8 +28,14 @@ public class ProvinciaDao {
 			Provincia objeto = null;
 			try {
 				iniciaOperacion();
-				objeto = (Provincia) session.get(Provincia.class, idProvincia);
-				} finally {
+				String hql="from Provincia where idProvincia =:idProvincia";
+				objeto=(Provincia) session.createQuery(hql).setParameter("idProvincia", (int)idProvincia).uniqueResult();
+				Hibernate.initialize(objeto.getMediciones());
+		
+			}catch (HibernateException he) {
+				manejaExcepcion(he);
+				throw he;
+			} finally {
 					session.close();
 					}
 			return objeto;
