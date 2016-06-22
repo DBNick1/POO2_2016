@@ -36,11 +36,13 @@ public class MedicionDao {
 		Medicion objeto = null;
 		try {
 			iniciaOperacion();
-			String hql="from Medicion where idMedicion =:idMedicion";
-			objeto=(Medicion) session.createQuery(hql).setParameter("idMedicion", (int)idMedicion).uniqueResult();
+			String hql = "from Medicion where idMedicion =:idMedicion";
+			objeto = (Medicion) session.createQuery(hql)
+					.setParameter("idMedicion", (int) idMedicion)
+					.uniqueResult();
 			Hibernate.initialize(objeto.getEstacion());
 			Hibernate.initialize(objeto.getProvincia());
-		}catch (HibernateException he) {
+		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;
 		} finally {
@@ -56,7 +58,7 @@ public class MedicionDao {
 		List<Medicion> lista = null;
 		try {
 			iniciaOperacion();
-			String hql = "from medicion m inner join fetch p.provincia where provincia=provincia and m.fecha=ffecha";
+			String hql = "from Medicion m inner join fetch Provincia p where p.idProvincia =:idProvincia and m.fecha =:ffecha";
 			lista = session.createQuery(hql)
 					.setCalendar("ffecha", (Calendar) fechaInicial).list();
 		} catch (HibernateException he) {
@@ -79,7 +81,10 @@ public class MedicionDao {
 			lista = session.createQuery(hql).setCalendar("ffecha", fecha)
 					.setParameter("idProvincia", provincia.getIdProvincia())
 					.list();
-			
+			for (Medicion m : lista) {
+				Hibernate.initialize(m.getProvincia());
+				Hibernate.initialize(m.getEstacion());
+			}
 
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
@@ -98,7 +103,7 @@ public class MedicionDao {
 		try {
 			iniciaOperacion();
 			String hql = "from Medicion where fecha =:ffecha";
-			lista = session.createQuery(hql).setCalendar("ffecha",fecha)
+			lista = session.createQuery(hql).setCalendar("ffecha", fecha)
 					.list();
 
 		} catch (HibernateException he) {
