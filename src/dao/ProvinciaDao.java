@@ -1,4 +1,6 @@
 package dao;
+import java.util.List;
+
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -41,4 +43,4 @@ public class ProvinciaDao {
 			return objeto;
 			}
 
-}
+		}

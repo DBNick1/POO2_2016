@@ -1,5 +1,7 @@
 package datos;
 
+import funciones.Funciones;
+
 public class Rango {
 	private float maximo;
 	private float minimo;
@@ -41,7 +43,7 @@ public class Rango {
 	@Override
 	public String toString() {
 		return "Rango [maximo=" + maximo + ", minimo=" + minimo + ", promedio="
-				+ promedio + "]";
+				+ Funciones.aproximar1Decimal((double) promedio) + "]";
 	}
 	
 	

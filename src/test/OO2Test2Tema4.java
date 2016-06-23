@@ -5,9 +5,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import datos.Medicion;
-import datos.Provincia;
-
-import funciones.Funciones;
+import datos.Rango;
 
 import negocio.ServicioMeteorologico;
 
@@ -29,13 +27,18 @@ public class OO2Test2Tema4 {
 			for (Medicion m : lista) {
 				System.out.println("\n" + m.toString());
 			}
-			/*
-			 * //Escenario 2 sm.calcularRangoPresion(sm.traerProvincia(1), new
-			 * GregorianCalendar(2016,02,25),new GregorianCalendar(2016,03,05));
-			 * //Escenario 3
-			 * sm.calcularRangoPresionCorregida(sm.traerProvincia(1),new
-			 * GregorianCalendar(2016,02,25),new GregorianCalendar(2016,03,05));
-			 */
+			
+			//Escenario 2
+			System.out.println("\n---> Calcular Rango de presión para la Provincia con id=1 entre el 25/3/2016 y el 5/4/2016");
+			Rango r= new Rango();						
+			r=sm.calcularRangoPresion(sm.traerProvincia(1), new GregorianCalendar(2016,02,25),new GregorianCalendar(2016,03,05));
+			System.out.println("\n"+r.toString()); 
+			
+			//Escenario 3
+			System.out.println("\n---> Calcular Rango de P. Corregida para la Provincia con id=1 entre el 25/3/2016 y el 5/4/2016");
+			r=sm.calcularRangoPresionCorregida(sm.traerProvincia(1),new GregorianCalendar(2016,02,25),new GregorianCalendar(2016,03,05));
+			System.out.println("\n"+r.toString());
+			
 		} catch (Exception e) {
 			System.out.println("Excepcion: " + e.getMessage());
 		}

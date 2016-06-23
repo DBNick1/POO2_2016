@@ -51,16 +51,21 @@ public class MedicionDao {
 		return objeto;
 	}
 
+	
 	@SuppressWarnings("unchecked")
-	public List<Medicion> traerMedicion(Provincia provincia,
-			GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
+	public List<Medicion> traerMedicion(Provincia provincia, Calendar fechaInicial, Calendar fechaFinal)
 			throws HibernateException {
 		List<Medicion> lista = null;
 		try {
 			iniciaOperacion();
-			String hql = "from Medicion m inner join fetch Provincia p where p.idProvincia =:idProvincia and m.fecha =:ffecha";
-			lista = session.createQuery(hql)
-					.setCalendar("ffecha", (Calendar) fechaInicial).list();
+			String hql = "from Medicion where idProvincia =:idProvincia AND fecha BETWEEN :ffechaInicial AND :ffechaFinal";
+			lista = session.createQuery(hql).setCalendar("ffechaInicial", fechaInicial).setCalendar("ffechaFinal", fechaFinal)
+					.setParameter("idProvincia", provincia.getIdProvincia())
+					.list();
+			for (Medicion m : lista) {
+				Hibernate.initialize(m.getProvincia());
+				Hibernate.initialize(m.getEstacion());
+			}
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;
@@ -105,7 +110,10 @@ public class MedicionDao {
 			String hql = "from Medicion where fecha =:ffecha";
 			lista = session.createQuery(hql).setCalendar("ffecha", fecha)
 					.list();
-
+			for (Medicion m : lista) {
+				Hibernate.initialize(m.getProvincia());
+				Hibernate.initialize(m.getEstacion());
+			}
 		} catch (HibernateException he) {
 			manejaExcepcion(he);
 			throw he;
@@ -115,4 +123,26 @@ public class MedicionDao {
 		return lista;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Medicion> traerMedicion(Calendar fechaInicial, Calendar fechaFinal)
+			throws HibernateException {
+		List<Medicion> lista = null;
+		try {
+			iniciaOperacion();
+			String hql = "from Medicion where fecha BETWEEN :ffechaInicial AND :ffechaFinal";
+			lista = session.createQuery(hql).setCalendar("ffechaInicial", fechaInicial).setCalendar("ffechaFinal", fechaFinal)
+					.list();
+			for (Medicion m : lista) {
+				Hibernate.initialize(m.getProvincia());
+				Hibernate.initialize(m.getEstacion());
+			}
+		} catch (HibernateException he) {
+			manejaExcepcion(he);
+			throw he;
+		} finally {
+			session.close();
+
+		}
+		return lista;
+	}	
 }

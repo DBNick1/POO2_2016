@@ -46,8 +46,7 @@ public class ServicioMeteorologico {
 		return m;
 	}
 
-	public List<Medicion> traerMedicion(Provincia provincia,
-			GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
+	public List<Medicion> traerMedicion(Provincia provincia, Calendar fechaInicial, Calendar fechaFinal)
 			throws Exception {
 
 		List<Medicion> m = dao.traerMedicion(provincia, fechaInicial,
@@ -77,25 +76,69 @@ public class ServicioMeteorologico {
 		return m;
 	}
 
-	public Rango calcularRangoPresion(Provincia provincia,
-			GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
+	public Rango calcularRangoPresion(Provincia provincia, Calendar fechaInicial, Calendar fechaFinal)
 			throws Exception {
-		Rango rango = new Rango();
-
+		Rango rango = new Rango(0,1020,0);
+		List<Medicion> lista= dao.traerMedicion(provincia, fechaInicial, fechaFinal);
+		if (lista == null)
+			throw new Exception("No se encontraron mediciones");
+		for (Medicion m:lista){
+			
+			if(m.getPresion()>rango.getMaximo()){  //si es maximo sett maximo
+				rango.setMaximo(m.getPresion());
+			}
+			if(m.getPresion()<rango.getMinimo()){ //si es minimo sett minimo
+				rango.setMinimo(m.getPresion());
+			}
+			rango.setPromedio(rango.getPromedio()+m.getPresion()); //acumulo las presiones
+		}
+		rango.setPromedio(rango.getPromedio()/lista.size());	//divido por la cantidad de elementos de la lista
 		return rango;
 	}
 
 	public Rango calcularRangoPresionCorregida(Provincia provincia,
 			GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
 			throws Exception {
-		Rango rango = new Rango();
-
+		Rango rango = new Rango(0,1020,0);
+		List<Medicion> lista= dao.traerMedicion(provincia, fechaInicial, fechaFinal);
+		if (lista == null)
+			throw new Exception("No se encontraron mediciones");
+		for (Medicion m:lista){
+			
+			if(m.calcularPresionCorregida()>rango.getMaximo()){  //si es maximo sett maximo
+				rango.setMaximo(m.calcularPresionCorregida());
+			}
+			if(m.calcularPresionCorregida()<rango.getMinimo()){ //si es minimo sett minimo
+				rango.setMinimo(m.calcularPresionCorregida());
+			}
+			rango.setPromedio(rango.getPromedio()+m.calcularPresionCorregida()); //acumulo las presiones
+		}
+		rango.setPromedio(rango.getPromedio()/lista.size());	//divido por la cantidad de elementos de la lista
+	
+		
 		return rango;
 	}
 
 	public Rango calcularRangoPrecipitacion(GregorianCalendar fechaInicial,
 			GregorianCalendar fechaFinal) throws Exception {
-		Rango rango = new Rango();
+		Rango rango = new Rango(0,1020,0);
+	
+		List<Medicion> lista=dao.traerMedicion(fechaInicial, fechaFinal);
+		
+		if (lista == null)
+			throw new Exception("No se registraron mediciones");
+		
+		for(Medicion m:lista){
+			
+			if(m.getPrecipitacion()>rango.getMaximo()){  //si es maximo sett maximo
+				rango.setMaximo(m.getPrecipitacion());
+			}
+			if(m.getPrecipitacion()<rango.getMinimo()){ //si es minimo sett minimo
+				rango.setMinimo(m.getPrecipitacion());
+			}
+			rango.setPromedio(rango.getPromedio()+m.getPrecipitacion()); //acumulo las precipitaciones
+		}
+		rango.setPromedio(rango.getPromedio()/lista.size());	//divido por la cantidad de elementos de la lista
 
 		return rango;
 	}
